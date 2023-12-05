@@ -49,9 +49,31 @@ order by 3 desc limit 10;
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 --Анализ отдела продаж ОТЧЕТ №2:
-
-
-
+with tab as
+(
+select 
+	distinct concat(e.first_name, ' ', e.last_name) as full_name,
+	round(avg(s.quantity * p.price) over (partition by s.sales_person_id), 0) as average_income,
+	(
+	select
+		round(avg(s.quantity * p.price), 0)
+	from sales s
+	join products p on p.product_id = s.product_id
+	) as total_average
+from sales s
+join employees e on e.employee_id = s.sales_person_id
+join products p on p.product_id = s.product_id
+)
+select
+	full_name as name,
+	average_income
+from tab
+where average_income < total_average
+order by 2 asc
+;
+---------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------
+--Анализ отдела продаж ОТЧЕТ №3:
 
 
 
