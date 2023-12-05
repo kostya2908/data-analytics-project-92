@@ -13,7 +13,7 @@ select
 	s.product_id,
 	sum(s.quantity) as operations,
 	p.price,
-	sum(s.quantity)*p.price as income
+	round(sum(s.quantity)*p.price, 0) as income
 from sales as s
 join employees as e on e.employee_id = s.sales_person_id
 join products as p on p.product_id = s.product_id
@@ -43,7 +43,7 @@ order by 1 asc
 select
 	distinct full_name as name,
 	sum(quantity_per_product) over (partition by full_name) as operations,
-	sum(income_per_product) over (partition by full_name) as income
+	round(sum(income_per_product) over (partition by full_name), 0) as income
 from t
 order by 3 desc limit 10;
 ---------------------------------------------------------------------------------------------
