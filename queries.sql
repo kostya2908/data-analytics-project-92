@@ -112,7 +112,15 @@ select
 from a_c;
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
-
+--Анализ покупателей ОТЧЕТ №2 (customers_by_month):
+select 
+	to_char(s.sale_date, 'yyyy-mm') as date,
+	count(distinct s.customer_id) as total_customers,
+	round(sum(s.quantity*p.price), 0) as income
+from sales s
+join products p on p.product_id = s.product_id
+group by 1
+order by 1;
 
 
 
