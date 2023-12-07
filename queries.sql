@@ -93,9 +93,20 @@ select
 from t;
 -------------------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------------------
+--Анализ покупателей ОТЧЕТ №1 (age_groups):
+create table a_c 
+(
+	id bigint primary key generated always as identity,
+	age_category varchar(255),
+	count bigint
+);
 
-
-
+insert into a_c (age_category, count) values
+	('16-25', (select count(customer_id) from customers where age >= 16 and age <= 25)),
+	('26-40', (select count(customer_id) from customers where age >= 26 and age <= 40)),
+	('40+', (select count(customer_id) from customers where age >= 41));
+--------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 
 
