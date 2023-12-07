@@ -105,6 +105,11 @@ insert into a_c (age_category, count) values
 	('16-25', (select count(customer_id) from customers where age >= 16 and age <= 25)),
 	('26-40', (select count(customer_id) from customers where age >= 26 and age <= 40)),
 	('40+', (select count(customer_id) from customers where age >= 41));
+
+select 
+	age_category,
+	count
+from a_c;
 --------------------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------------------
 
