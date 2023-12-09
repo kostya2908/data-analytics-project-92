@@ -12,7 +12,7 @@ select
 	s.product_id,
 	count(s.sales_id) as operations,
 	p.price,
-	round(sum(s.quantity)*p.price, 0) as income
+	sum(s.quantity)*p.price as income
 from sales as s
 join employees as e on e.employee_id = s.sales_person_id
 join products as p on p.product_id = s.product_id
@@ -21,7 +21,7 @@ group by 1, 2, 4
 select 
 	t.name as name, 
 	sum(t.operations) as operations,
-	sum(t.income) as income
+	floor(sum(t.income)) as income
 from t
 group by 1
 order by 3 desc limit 10;
