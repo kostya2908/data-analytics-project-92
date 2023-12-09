@@ -29,7 +29,7 @@ order by 3 desc limit 10;
 -------------------------------------------------------------------------------------------
 --Анализ отдела продаж ОТЧЕТ №1 (top_10_total_income):
 --Запрос №2 (partition by):
-with t as
+/*with t as
 (
 select 
 	distinct concat(e.first_name, ' ', e.last_name) as full_name,
@@ -45,7 +45,7 @@ select
 	sum(quantity_per_product) over (partition by full_name) as operations,
 	round(sum(income_per_product) over (partition by full_name), 0) as income
 from t
-order by 3 desc limit 10;
+order by 3 desc limit 10;*/
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 --Анализ отдела продаж ОТЧЕТ №2 (lowest_average_income):
