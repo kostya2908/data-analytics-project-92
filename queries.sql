@@ -103,30 +103,28 @@ order by 1;
 -----------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------
 --Анализ покупателей ОТЧЕТ №3 (special_offer):
-with tab as
+--Анализ покупателей ОТЧЕТ №3 (special_offer):
+with t as
 (
-select
-	c.customer_id,
-	concat(c.first_name, ' ', c.last_name) as customer,
-	s.product_id,
-	s.sale_date,
+select distinct on (s.customer_id)
+	s.*,
 	p.price,
-	dense_rank() over (order by s.sale_date),
-	concat(e.first_name, ' ', e.last_name) as seller,
-	s.sales_id
+	concat(c.first_name, ' ', c.last_name) as customer,
+	concat(e.first_name, ' ', e.last_name) as seller
 from sales s 
 left join customers c on c.customer_id = s.customer_id 
 left join products p on p.product_id = s.product_id
 left join employees e on e.employee_id = s.sales_person_id
-order by 1, 4
+where p.price = 0
+order by s.customer_id, s.sale_date
 )
 select 
-	distinct on (customer, seller)
 	customer,
 	sale_date,
 	seller
-from tab
-where dense_rank = 1 and price = 0;
+from t
+order by customer_id
+;
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
 
